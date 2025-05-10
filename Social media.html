@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabinet d'avocats BOUYAQINE - Services Juridiques</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- Small embedded avatar for vCard - invisible on page but used for contact photo -->
+    <link id="vcard-photo" type="image/jpeg" rel="preload" as="image" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gODAK/9sAQwAGBAUGBQQGBgUGBwcGCAoQCgoJCQoUDg8MEBcUGBgXFBYWGh0lHxobIxwWFiAsICMmJykqKRkfLTAtKDAlKCko/9sAQwEHBwcKCAoTCgoTKBoWGigoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo/8AAEQgAZABkAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A9sooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoqG4uoLWPzJ5o4k/vOwArLfxl4ejba2rWxOQMBiT9MLk/lQBs0VVsNRstSh82yuo7hOm5DnB9COo+orLn8W6VBqr6c0rGZGKlthC5/ukgYz7ZzQBs0VFbXEVzAs0EiyRsMq6HII9QanJwMmgBaKp2Oq2OoySx2V5DcPH99Y3DFPTII+tXKACiiigAooooAKiuriK1t5J5m2xRqWZj2AppuIBcCEzJ5pBITd8xA64rn/FtjJrPh2Wxjl8qRyrI+M7WVgwz+BoAzJPGt7rOoyz+H7OL7LF9ySVtzS+pGACFHbJBJOAKsad441bVm+z2+h28k5yVjbewbHUrnGPocCrunaVD4d0OGytpDIY1y0jD7zHkn9ayj4d8RKxMfiJlJOTugQj8uKANDVfGc2lu17qOmPBaKQHlDhjGD0JwM4zkZ61u6XqVpq1il3ZTLLCw4I6g+hHY+xrze40bxnHGzPrdrMFGSkiJub2AKgZPbmtz4epc2mmXNldyh5LWYoHVdoZCNykDtkEH8aAOyoqOKaKeJZYpFkRhlWU5BHsakoAKKKKACoLu7gtITNcSrFGP4m6fSsLxd4qj0OLyIQJbyQZVSflQf3j/QVxMb6r4nuPtF3K0hByoPCRj0UdvoOaAO11Lxzp9soEDS3DHgCPhc/Vun5Vz8vj3WLpj9m061iB6b2Z8fgAP1qLS/DenaezSoomuW+9NJ8zH6dhVlvEmmJKY2uMEHB+RsUAQ/8JhrwG7+z7b/AHZx/jWfP428R2hP2jQbd/RZJVP54/pWs3iPSVXcbpQPUqwH6iqV74u0a3jZlumkI/hjRmJ/LFAEVh8Qb+0mWPVNGkjQ/wDLSHdx9QwB/I12en6jZ6parbWUyzSsMhVOM+/tXkuoa9ca1KJEsLi3tlOfLlChmPq2G6fj+daXw/1ttP8AEYs2JFvehY9vYSA/Kfx5H50Ael0UUUAFYXi7W30PS/Mi/wCPiY+XFj+En7zfQD9SK2ZpY4IXmlcJGilmY9ABya8Y1fV7jxJrUl9MSEzhIwfuxjoPx6n3oAvaPo0+sSm5u3aO1yCzscGT2Ht6mt6eOO3iWKJQkaDCqOgFOiiSGJY41CogCqo6ACofEGP7DuM/3R/MUAc/e6/e3EjQ6coSMHa07DJb/dX+vT61QbRhIwe+uLi6brvkbA/AcVB4aPl6JaoehUM3/AnJP6k1oT3ccEZeR1RR1ZjgCgDB1TQYfscstnGHhUZKrwwHcY7j27isS0YyQlT1U/pXTaPrf9o+ILuwRQLdFzK2fmJwcBfbjJP0rmdQi+ya/ewr90SEj6NzQBqFm9TWn4TmaHxPp7KcbpNh/wB4EEfoayPNNW9ImeHU7SVDhlmQg/iKAPcKKbG4kjV16MAR+NOoAK8b1uNrfxFqMT/eW4fP4nI/QivYZ5PKt5JP7ilv0rzCG1k17W7m6K5iDvK/+yoPyj+v1oA29PtZIBBczjbLJGoQHqi4GT9Tk/hiqPi2f5beAHgsXP4cD9c1qzSCG3klPRFLH8BXHXtw13dySt1ds49ugH4DFAGhYaHLfwCZZRGpJG3aST+XFdBZadBp8QjhTGerHlj9TXP+FdTRJTZTsAr/ADRk9j3H49a6SWdIYy8jBVHUnpQBn2/h7TbeZ5o7ZfMdi5ZiTknknJ71Z+y2/wDz7xf98Csu48SRGUpbQsyZ++3GfoPX61zeo39/PqIvBK6yDgIvCqOw29qAJPHECw+JnZekkSOfrkr/AErnr8ZdW/D9K6LxW5l0vS78niRDGT7jkfyFYF+P3YPsf50ATIMKKv8AheDz/EenJ/euFP4A5P6A1QUYWtLwkPO8U6eO3me3zbf6UAeo0UUUAVNTm+z6ZcydxGdv1PArzvwzb/aL+S4YZWEfL/vHp+g/WvQtSXfp1yvqjf0rzjw1ciDUpdpwSSv5jI/UGgCfxJdeVYeUDzK2PwHJ/pXKxMUkVh2NdL4rTNtBJ/dbH5j/AOtXNUAdLZ38FvYQySyBFRcA9c9ccelO0PWJ7+V4njXah+XaSfX1H0rmkkKkEGtDS7t/tKsg+YnAyef/AK1AHZJGkYwiKo9FGKRoo3+/Grf7wBqO2EiRDzCCx5OK5vxZqF7p5jEE5Qv823aCOPqKAN29g06W3YXJgRAPmLkYH41xMwElzLs+75jbcdMZNU5b64uTmad3PbcxOPpVu0tjLEzucY4A9TQA2RcYPrWj4ajE3iXT0PQSGT/vkbv6VnScDHrXT/D6yz/aV8R/zwi/Vj/QUAd1RRRQBDcxGe2liH8aFfzryfT5zaa9AzHAWRo2PpzyP0Ne0V5R4q0uXTPEVxHGCYJXMkT9icnA9wc0AaOsRi60WdR1UBh9CCf6GuQrtbKTz9LhkByShQn6cV51LHJA+2VGGR05oAdC/OR0IrWsJsHbmsStp7VILMhiLZ+Y+/t9KAOlg1OS0TdG3B6qehrJ1jxDJe2xhjX5G++3c+wqrJasf9bA/sXj3j87H8qRdNjc/Kgz/tLg/wA6AOdZyc1JCm9wrDIO3j1yQK6KPQUJyYwfqBVeLTZrHVIJVQtbl/3uByuOh+nrQBSCgDJ7DJrrfBVl5OnTXbD5p3wD/sr/APXJrCvdKv8AUlZba1kkH8R+6g+prr9EsW0vRbe1c5dF+ZvVick/nQBfooooAWuX8a6D/aFn9tt0zd246D/lpH1H4jkfhXUUhAYEEZB6g0AcD4E1DKSae5+ZCLRU9QeTH+RyPo1Ze0R65eID0mkx+tUpo10/W5o0ODDOQPcBuR+WKu+Ibe4Gvz3Ej7zJId4PQLngD0AoA3dSQHTbo/8APJjXFiuy1h92j3o/6Yv/ACrjYIjPNGgGcmgC5Y2huIzt6hWcfXYcfoTWmuliJ8OhVkwwZTjkcg1fsoBDCqMMA896nCj8KAPGNR05tL1m6smB/duSh/vKeCPyra0a3jk09J5E3mVnYE8jGeOPrjB+uRVXR47S50yGWTyyz/MWckFgeoPbFQ+GxCb7UYrb5YVcsF4xjdn9cflQBZv53uNSvEyR5TbPzxz+uK7Tw/P5+g2Eh6mBM/UA/wBa4uZN2s3vvL/7NXV+FC3/AAjdln+4f/QjQBoUUUUAFFFFABSMwVSzEAAZJPQClrgfiDr7BX0m0f5iP30in6fKD9ecfSgCp4u8VnVgdOsZMWCsDIw4MxHb/dHb1/DGNbRJP7N0xF2gXMxyVPYZ5b8Bx9cetc34ShEup7yPljXP4niuqvFB1C39FYt+i//XoALi+AULDCqY7s2B+VYGoQ/aJN806zMy5CImAvp9f1q5HZJdQq7OVKkkY9+tLcReQjLsUKoJGBjB9aAI0i+zWgiVQERQFwMdM9qxbUf8VE3/AFxX+S1reHsXEdzA3JDkj6MP8Qa55pP7M8R3Usf35Iyy4/vDDY/I0AQoP+Jnef8AXT/2Y11fgsmTw3GzcmORl+mST/WuYiZ106+lBDcYXKnjrXV+CHVvDpjBBMcz5/HB/pQB0NFFFABRRRQAVwPj6BHudOu5JRD5LPGWP8JP8P17/hXfV434i1ODVPEVxPDIHiDeWjr2XsR7E8igDd8JeVZRySSP8sK7nI/AY/OtK+CXTpcR9Vij+Y/3m5x9cVzVhF9pkt7dfvO3Oe4HU1oXOs/2XbRQl8ySn5e4ULjP9KANDTNeuNMXCYmi/wCeZ7fStybUra8snMMgYFTkdiOorktM11YLkQ3A/dsecfwmtiS3s7u5e5L+Rb/dKKM/gMUANsBHaX0F0h+UjD477eDXP+IdOmttW+0qnyCTcremTz+taWu3JW1WKMkHcGbb79K1gA6DIGQQCCODQBW0jRLbULCG5LsrsPlwcY54qfw1p8+nanc2M0pCMSRMeuT0P5d/Q0/w2t3p4udPYF7eMh4GHVCe30NbdABRRRQAUUUUAFcHa+BJ7W9maTUkltWlZ1jMZBXJzgHsK7yvPNa8Larp+py3FpaySW8rFlkhcED2I6j8aAItP0GO9vpbB7swTxbsEqWRgDgjHpWXYaBqml6v5sdqZ7WFylxGp3Jx/EB3wR09a7K0t5I9PtyVZJ1jUvHIhUow6jpXReHGXUrXzgFjuYmKSqnQsDjd9DnPtigDl9J0FLnTxJNdvCJXLFF43KP4SfQ81S1XSdR0q4Es5aaL7puEP5bh2b8M+3SrurSro+uXcVtJ9okR+VO7fH77PTED06ZPei41Se8txHbRrGB95nOcD/PegCHR5zNPl8bmHJ9+xrotH8SNbzLZ6gfkbhJz0U+jf3ffsfrWBa26QRqiDAXpVrS9JGq6gbeW4MNvGPMmKD5iB0VSemc+vT8aAPTaKiglE8KSDOGGcHqPY+tS0AFFFFABRRRQB//2Q==">
+    <style>
+        :root {
+            --primary: #8b0000;
+            --secondary: #4b3621;
+            --accent: #d4af37;
+            --dark: #1a1a2e;
+            --light: #f0f8ff;
+            --glass: rgba(255, 255, 255, 0.1);
+            
+            /* Social Media Colors */
+            --instagram: #E1306C;
+            --facebook: #4267B2;
+            --tiktok: #000000;
+            --youtube: #FF0000;
+            --linkedin: #0077B5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+            background-attachment: fixed;
+        }
+
+        .particle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            background: radial-gradient(circle at center, var(--primary), transparent);
+            animation: float 8s infinite ease-in-out;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+            25% { transform: translateY(-20px) translateX(10px) rotate(90deg); }
+            50% { transform: translateY(0) translateX(20px) rotate(180deg); }
+            75% { transform: translateY(20px) translateX(10px) rotate(270deg); }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 25, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .navbar .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .navbar .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        #hero {
+            display: flex;
+            min-height: 100vh;
+            padding: 150px 5% 100px;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, rgba(15, 12, 41, 0.9), rgba(48, 43, 99, 0.9), rgba(36, 36, 62, 0.9));
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            margin-right: auto;
+            z-index: 2;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-content h2 {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            margin-left: 50px;
+            z-index: 2;
+            animation: float-subtle 6s ease-in-out infinite, fadeIn 1.5s;
+        }
+
+        @keyframes float-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .circle-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
+            transform: translateZ(0);
+            padding: 15px;
+        }
+
+        .circle-image {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+            border-radius: 0;
+            transform: scale(1); 
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        .circle-overlay {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            border-radius: 50%;
+            background: linear-gradient(45deg, transparent, rgba(0, 188, 212, 0.2), transparent);
+            animation: rotate 8s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .circle-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--primary);
+            animation: pulse 2s ease-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 1; }
+            70% { transform: scale(1.1); opacity: 0; }
+            100% { transform: scale(0.95); opacity: 0; }
+        }
+
+        .futuristic-button {
+            background-color: transparent;
+            color: #fff;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--primary);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.3);
+        }
+
+        .futuristic-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .futuristic-button:hover::before {
+            width: 100%;
+        }
+
+        .futuristic-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(0, 188, 212, 0.6);
+        }
+
+        .futuristic-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .futuristic-button:hover i {
+            transform: translateX(5px);
+        }
+
+        #features {
+            padding: 100px 5%;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: var(--light);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .features-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .feature {
+            position: relative;
+            width: 300px;
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 188, 212, 0.1), transparent);
+            transform: translateY(100%);
+            transition: transform 0.6s;
+        }
+
+        .feature:hover::before {
+            transform: translateY(-100%);
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 188, 212, 0.2);
+        }
+
+        .feature i {
+            font-size: 3em;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+
+        .feature p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        #contact {
+            padding: 100px 5%;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(rgba(10, 10, 25, 0.8), rgba(10, 10, 25, 0.9));
+            background-attachment: fixed;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            width: 200px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-item i {
+            font-size: 2em;
+            color: var(--primary);
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+
+        .contact-item:hover i {
+            transform: scale(1.2);
+        }
+
+        .contact-item a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s;
+            word-break: break-word;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary);
+        }
+
+        footer {
+            background-color: rgba(10, 10, 25, 0.9);
+            color: var(--light);
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer p {
+            position: relative;
+            z-index: 1;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px 15px;
+            }
+
+            .navbar .logo {
+                font-size: 1rem;
+                letter-spacing: 1px;
+                max-width: 70%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .navbar .nav-links {
+                display: none;
+            }
+
+            #hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 170px 20px 50px;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin-right: 0;
+                margin-bottom: 50px;
+            }
+
+            .hero-content h2 {
+                font-size: 2.3em;
+            }
+
+            .hero-image-container {
+                width: 280px;
+                height: 280px;
+                margin-left: 0;
+            }
+            
+            /* Fix for circle image on mobile */
+            .circle-image {
+                width: 80%;
+                height: 80%;
+                object-fit: contain;
+                transform: scale(1);
+                margin: auto;
+                max-width: 100%;
+                border-radius: 0;
+                background-color: transparent;
+            }
+            
+            .circle-container {
+                background-color: white;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .features-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-item {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .contact-item a {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated particles in background -->
+    <div id="particles"></div>
+
+    <!-- Navigation bar -->
+    <nav class="navbar">
+        <div class="logo">Cabinet BOUYAQINE</div>
+        <div class="nav-links">
+            <a href="#hero">Accueil</a>
+            <a href="#features">Services</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <h2>Cabinet d'avocats BOUYAQINE</h2>
+            <p>Expertise juridique à votre service à Casablanca. Nous vous accompagnons dans toutes vos démarches juridiques avec professionnalisme et dévouement.</p>
+            <a href="#" id="downloadVCard" class="futuristic-button">
+                <i class="fas fa-address-card"></i> Ajouter aux Contacts
+            </a>
+        </div>
+        <div class="hero-image-container">
+            <div class="circle-container">
+                <img src="./logo.png" alt="Cabinet BOUYAQINE" class="circle-image" loading="eager" onerror="this.onerror=null;this.alt='CABINET BOUYAQINE';">
+                <div class="circle-overlay"></div>
+                <div class="circle-pulse"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <h2 class="section-title">Nos Services</h2>
+        <div class="features-container">
+            <div class="feature">
+                <i class="fas fa-balance-scale"></i>
+                <h3>Droit des Affaires</h3>
+                <p>Conseils juridiques pour entreprises et professionnels dans leurs activités commerciales.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-gavel"></i>
+                <h3>Litiges et Contentieux</h3>
+                <p>Représentation et défense de vos intérêts devant les tribunaux et cours de justice.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-handshake"></i>
+                <h3>Droit Immobilier</h3>
+                <p>Assistance juridique pour vos transactions immobilières et règlement des différends.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Contactez-nous</h2>
+        <div class="contact-container">
+            <p>Besoin de conseils juridiques ou d'assistance pour votre dossier?</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <a href="https://www.google.com/maps" target="_blank">
+                        4éme étage, Hall B,47 Rue Othmane inb affane, Casablanca 20250
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <a href="tel:0522263565">0522263565</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="anis.bouyaqine@cabinetbouyaqine.com" onclick="window.open('mailto:anis.bouyaqine@cabinetbouyaqine.com', '_blank');">anis.bouyaqine@cabinetbouyaqine.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-globe"></i>
+                    <a href="https://cabinetbouyaqine.com" target="_blank">cabinetbouyaqine.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Cabinet d'avocats BOUYAQINE. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Create animated background particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const numberOfParticles = 20;
+            
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 150 + 50;
+                
+                // Random animation delay
+                const delay = Math.random() * 8;
+                
+                particle.style.left = `${posX}vw`;
+                particle.style.top = `${posY}vh`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Animate on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.feature, .contact-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            elements.forEach(element => {
+                element.style.opacity = 0;
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(element);
+            });
+        }
+
+        // vCard download functionality
+        document.getElementById('downloadVCard').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const phoneNumber = '0522263565';
+            const contactName = 'Anis Bouyaqine - Cabinet d\'avocats';
+            const email = 'anis.bouyaqine@cabinetbouyaqine.com';
+            const address = '4éme étage, Hall B,47 Rue Othmane inb affane, Casablanca 20250';
+            const website = 'cabinetbouyaqine.com';
+            
+            // Create an image element to convert the current website image to base64
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = function() {
+                // Create canvas to convert image to base64 with better quality
+                const canvas = document.createElement('canvas');
+                // Use square canvas with padding to fit the entire logo
+                const maxSize = 400;
+                const padding = 60; // Add padding around the image
+                
+                canvas.width = maxSize;
+                canvas.height = maxSize;
+                const ctx = canvas.getContext('2d');
+                
+                // Fill with white background
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, maxSize, maxSize);
+                
+                // Use better rendering quality
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                
+                // Calculate dimensions to preserve aspect ratio
+                const scale = Math.min(
+                    (maxSize - padding*2) / img.width,
+                    (maxSize - padding*2) / img.height
+                );
+                
+                // Center the image
+                const x = (maxSize - img.width * scale) / 2;
+                const y = (maxSize - img.height * scale) / 2;
+                
+                // Draw the image centered with padding
+                ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+                
+                // Get base64 data from canvas - use highest quality
+                const dataURL = canvas.toDataURL('image/jpeg', 1.0);
+                const base64Image = dataURL.split(',')[1];
+                
+                // Create vCard with photo in the most compatible format
+                const vCardData = `BEGIN:VCARD
+VERSION:3.0
+N:Bouyaqine;Anis;;;
+FN:${contactName}
+ORG:Cabinet d'avocats BOUYAQINE
+TITLE:Avocat
+TEL;TYPE=WORK,VOICE:${phoneNumber}
+ADR;TYPE=WORK:;;${address};;;
+EMAIL;TYPE=WORK:${email}
+URL:${website}
+PHOTO;ENCODING=b;TYPE=JPEG:${base64Image}
+END:VCARD`;
+                
+                const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'Anis-Bouyaqine-Contact.vcf');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                URL.revokeObjectURL(url);
+            };
+            
+            // Use the current image on the page with absolute path
+            const logoSrc = document.querySelector('.circle-image').src;
+            // Make sure we have the full path for local images
+            if (logoSrc.startsWith('./') || !logoSrc.startsWith('http')) {
+                const fullPath = new URL(logoSrc, window.location.href).href;
+                img.src = fullPath;
+            } else {
+                img.src = logoSrc;
+            }
+            
+            // If there's an error loading the image, create the vCard without photo
+            img.onerror = function() {
+                console.error("Failed to load image for vCard");
+                
+                const vCardData = `BEGIN:VCARD
+VERSION:3.0
+N:Bouyaqine;Anis;;;
+FN:${contactName}
+ORG:Cabinet d'avocats BOUYAQINE
+TITLE:Avocat
+TEL;TYPE=WORK,VOICE:${phoneNumber}
+ADR;TYPE=WORK:;;${address};;;
+EMAIL;TYPE=WORK:${email}
+URL:${website}
+END:VCARD`;
+                
+                const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'Anis-Bouyaqine-Contact.vcf');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                URL.revokeObjectURL(url);
+            };
+        });
+
+        // Initialize everything when the page loads
+        window.addEventListener('load', () => {
+            createParticles();
+            animateOnScroll();
+            
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    if(this.getAttribute('href') === "#") return;
+                    e.preventDefault();
+                    
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if(targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

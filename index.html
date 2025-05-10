@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law Firm Template Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00e7b5;
+            --secondary: #4b3621;
+            --editor-bg: #2d2d2d;
+            --editor-text: #f0f0f0;
+            --editor-panel: #3d3d3d;
+            --editor-highlight: #4a7bab;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--editor-bg);
+            color: var(--editor-text);
+            line-height: 1.6;
+        }
+        
+        .editor-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background-color: var(--editor-panel);
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .preview-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .preview-frame {
+            width: 100%;
+            height: calc(100vh - 70px);
+            border: 1px solid #555;
+            background-color: white;
+        }
+        
+        .editor-title {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .accordion {
+            margin-bottom: 10px;
+            border: 1px solid #555;
+            border-radius: 4px;
+        }
+        
+        .accordion-header {
+            padding: 12px 15px;
+            background-color: #2a2a2a;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .accordion-content {
+            padding: 15px;
+            display: none;
+        }
+        
+        .accordion.active .accordion-content {
+            display: block;
+        }
+        
+        .accordion-toggle {
+            transition: transform 0.3s;
+        }
+        
+        .accordion.active .accordion-toggle {
+            transform: rotate(180deg);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px 10px;
+            background-color: #1e1e1e;
+            border: 1px solid #444;
+            color: var(--editor-text);
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-group input[type="color"] {
+            height: 35px;
+            padding: 2px;
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+            margin-right: 5px;
+        }
+        
+        .btn:hover {
+            background-color: #a50000;
+        }
+        
+        .btn-secondary {
+            background-color: #555;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #666;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons .btn {
+            flex: 1;
+            min-width: 0;
+            padding: 10px 8px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+        
+        .color-preview {
+            display: flex;
+            margin-top: 10px;
+            gap: 10px;
+        }
+        
+        .color-swatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            border: 1px solid #555;
+        }
+        
+        .service-item {
+            background-color: #343434;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            position: relative;
+        }
+        
+        .service-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .delete-btn {
+            background-color: #d12626;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .add-service-btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .contact-item {
+            background-color: #343434;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        
+        .file-upload {
+            display: none;
+        }
+        
+        .upload-label {
+            display: block;
+            padding: 10px;
+            text-align: center;
+            background-color: #444;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        
+        .upload-label:hover {
+            background-color: #555;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 4px;
+            color: white;
+            background-color: #4CAF50;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transform: translateX(110%);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+        
+        .slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: none;
+        }
+        
+        #logo-scale-value {
+            font-size: 0.9rem;
+            min-width: 40px;
+            text-align: right;
+        }
+        
+        .gradient-preview {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        #section-gradient-preview {
+            width: 100%;
+            height: 40px;
+            border-radius: 4px;
+            border: 1px solid #555;
+            background: linear-gradient(135deg, #0a0a19, #1a1a2e);
+        }
+        
+        .gradient-preview-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .editor-container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .sidebar {
+                width: 100%;
+                order: 1;
+                max-height: none;
+                overflow-y: auto;
+                padding-bottom: 80px;
+            }
+            
+            .preview-container {
+                order: 2;
+                height: auto;
+                padding-bottom: 80px;
+                width: 100%;
+            }
+            
+            .preview-frame {
+                height: 80vh;
+                min-height: 600px;
+                border: none;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+            }
+            
+            .action-buttons {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: var(--editor-panel);
+                padding: 15px;
+                margin-top: 0;
+                margin-bottom: 0;
+                z-index: 100;
+                box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
+            }
+            
+            .action-buttons .btn {
+                padding: 12px 15px;
+                font-size: 1rem;
+            }
+            
+            body {
+                overflow-y: auto;
+                height: auto;
+            }
+            
+            .accordion-content {
+                max-height: none;
+                overflow: visible;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="editor-container">
+        <div class="sidebar">
+            <div class="editor-title">TapNgen Template Editor</div>
+            
+            <!-- General Settings -->
+            <div class="accordion active">
+                <div class="accordion-header">
+                    <h3>General Settings</h3>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="form-group">
+                        <label for="law-firm-name">Law Firm Name</label>
+                        <input type="text" id="law-firm-name" value="Cabinet d'avocats BOUYAQINE">
+                    </div>
+                    <div class="form-group">
+                        <label for="tagline">Tagline</label>
+                        <textarea id="tagline">Expertise juridique à votre service à Casablanca. Nous vous accompagnons dans toutes vos démarches juridiques avec professionnalisme et dévouement.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-id">Card ID (for tracking)</label>
+                        <input type="text" id="card-id" placeholder="Generated automatically if left empty">
+                    </div>
+                    <div class="form-group">
+                        <label for="logo">Logo (Image Upload)</label>
+                        <div id="logo-preview-container" style="width: 100px; height: 100px; margin: 0 auto; background-color: white; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: 50%; overflow: hidden;">
+                            <img id="logo-preview" src="" alt="Logo Preview" style="max-width: 80%; max-height: 80%;">
+                        </div>
+                        <label for="logo-upload" class="upload-label">
+                            <i class="fas fa-upload"></i> Upload Logo
+                        </label>
+                        <input type="file" id="logo-upload" class="file-upload" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="logo-scale">Logo Scale (Size)</label>
+                        <div class="slider-container">
+                            <input type="range" id="logo-scale" min="30" max="200" value="70" class="slider">
+                            <span id="logo-scale-value">70%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Colors and Styling -->
+            <div class="accordion">
+                <div class="accordion-header">
+                    <h3>Colors & Styling</h3>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="form-group">
+                        <label for="primary-color">Animation1 Color</label>
+                        <input type="color" id="primary-color" value="#8b0000">
+                    </div>
+                    <div class="form-group">
+                        <label for="secondary-color">Animation3 Color</label>
+                        <input type="color" id="secondary-color" value="#4b3621">
+                    </div>
+                    <div class="form-group">
+                        <label for="accent-color">Animation2 Color</label>
+                        <input type="color" id="accent-color" value="#d4af37">
+                    </div>
+                    <div class="form-group">
+                        <label for="background-color">UPTEXT Color</label>
+                        <input type="color" id="background-color" value="#1a1a2e">
+                    </div>
+                    <div class="form-group">
+                        <label for="text-color">DOWNtext Color</label>
+                        <input type="color" id="text-color" value="#f0f8ff">
+                    </div>
+                    <div class="form-group">
+                        <label for="page-bg-color">Page Background Color</label>
+                        <input type="color" id="page-bg-color" value="#ffffff">
+                    </div>
+                    <div class="form-group">
+                        <label for="section-gradient-start">Section Gradient Start</label>
+                        <input type="color" id="section-gradient-start" value="#0a0a19">
+                    </div>
+                    <div class="form-group">
+                        <label for="section-gradient-end">Section Gradient End</label>
+                        <input type="color" id="section-gradient-end" value="#1a1a2e">
+                    </div>
+                    <div class="form-group">
+                        <label for="gradient-angle">Gradient Angle (degrees)</label>
+                        <div class="slider-container">
+                            <input type="range" id="gradient-angle" min="0" max="360" value="135" class="slider">
+                            <span id="gradient-angle-value">135°</span>
+                        </div>
+                    </div>
+                    <div class="color-preview">
+                        <div class="color-swatch" id="primary-swatch"></div>
+                        <div class="color-swatch" id="secondary-swatch"></div>
+                        <div class="color-swatch" id="accent-swatch"></div>
+                        <div class="color-swatch" id="page-bg-swatch"></div>
+                    </div>
+                    <div class="gradient-preview">
+                        <div id="section-gradient-preview"></div>
+                        <span class="gradient-preview-label">Section Gradient</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Services Section -->
+            <div class="accordion">
+                <div class="accordion-header">
+                    <h3>Services</h3>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="form-group">
+                        <label for="services-title">Services Section Title</label>
+                        <input type="text" id="services-title" value="Nos Services">
+                    </div>
+                    <div id="services-container">
+                        <!-- Services will be added dynamically -->
+                    </div>
+                    <button class="btn add-service-btn" id="add-service-btn">
+                        <i class="fas fa-plus"></i> Add Service
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Contact Information -->
+            <div class="accordion">
+                <div class="accordion-header">
+                    <h3>Contact Information</h3>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="form-group">
+                        <label for="contact-title">Contact Section Title</label>
+                        <input type="text" id="contact-title" value="Contactez-nous">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-subtitle">Contact Section Subtitle</label>
+                        <input type="text" id="contact-subtitle" value="Besoin de conseils juridiques ou d'assistance pour votre dossier?">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-name">Full Name</label>
+                        <input type="text" id="contact-name" value="Anis Bouyaqine">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-address">Address</label>
+                        <textarea id="contact-address">4éme étage, Hall B,47 Rue Othmane inb affane, Casablanca 20250</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-phone">Phone</label>
+                        <input type="text" id="contact-phone" value="0522263565">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email" value="anis.bouyaqine@cabinetbouyaqine.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-website">Website</label>
+                        <input type="text" id="contact-website" value="cabinetbouyaqine.com">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="accordion">
+                <div class="accordion-header">
+                    <h3>Footer</h3>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="form-group">
+                        <label for="footer-text">Footer Text</label>
+                        <input type="text" id="footer-text" value="&copy; 2025 DOMO28. Tous droits réservés.">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn" id="preview-btn">Update Preview</button>
+                <button class="btn btn-secondary" id="download-btn">Download HTML</button>
+                <button class="btn btn-secondary" id="download-txt-btn">Download as TXT</button>
+                <button class="btn btn-secondary" id="save-btn">Save</button>
+                <button class="btn btn-secondary" id="dashboard-btn" style="background-color: #4CAF50;">Analytics Dashboard</button>
+            </div>
+        </div>
+        
+        <div class="preview-container">
+            <iframe id="preview-frame" class="preview-frame"></iframe>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">Settings updated!</div>
+
+    <!-- Load external scripts first -->
+    <script src="template-editor.js"></script>
+
+    <script>
+        // Service template
+        const serviceTemplate = `
+            <div class="service-item" data-id="service-{id}">
+                <div class="service-item-header">
+                    <h4>Service #{num}</h4>
+                    <button class="delete-btn" data-id="service-{id}">Delete</button>
+                </div>
+                <div class="form-group">
+                    <label for="service-icon-{id}">Icon (Font Awesome)</label>
+                    <input type="text" id="service-icon-{id}" placeholder="fas fa-balance-scale" value="{icon}">
+                </div>
+                <div class="form-group">
+                    <label for="service-title-{id}">Service Title</label>
+                    <input type="text" id="service-title-{id}" placeholder="Service Title" value="{title}">
+                </div>
+                <div class="form-group">
+                    <label for="service-desc-{id}">Service Description</label>
+                    <textarea id="service-desc-{id}" placeholder="Service description...">{description}</textarea>
+                </div>
+            </div>
+        `;
+        
+        // Default services data
+        const defaultServices = [
+            {
+                id: 1,
+                icon: "fas fa-balance-scale",
+                title: "Droit des Affaires",
+                description: "Conseils juridiques pour entreprises et professionnels dans leurs activités commerciales."
+            },
+            {
+                id: 2,
+                icon: "fas fa-gavel",
+                title: "Litiges et Contentieux",
+                description: "Représentation et défense de vos intérêts devant les tribunaux et cours de justice."
+            },
+            {
+                id: 3,
+                icon: "fas fa-handshake",
+                title: "Droit Immobilier",
+                description: "Assistance juridique pour vos transactions immobilières et règlement des différends."
+            }
+        ];
+        
+        // Initialize variables for template
+        let services = [...defaultServices];
+        let nextServiceId = services.length + 1;
+        let logoData = '';
+        
+        // DOM elements
+        const previewFrame = document.getElementById('preview-frame');
+        const previewBtn = document.getElementById('preview-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const downloadTxtBtn = document.getElementById('download-txt-btn');
+        const dashboardBtn = document.getElementById('dashboard-btn');
+        const servicesContainer = document.getElementById('services-container');
+        const addServiceBtn = document.getElementById('add-service-btn');
+        const notification = document.getElementById('notification');
+        const logoUpload = document.getElementById('logo-upload');
+        const logoPreview = document.getElementById('logo-preview');
+        const logoScale = document.getElementById('logo-scale');
+        const logoScaleValue = document.getElementById('logo-scale-value');
+        
+        // Color elements
+        const primaryColor = document.getElementById('primary-color');
+        const secondaryColor = document.getElementById('secondary-color');
+        const accentColor = document.getElementById('accent-color');
+        const backgroundColor = document.getElementById('background-color');
+        const textColor = document.getElementById('text-color');
+        const pageBgColor = document.getElementById('page-bg-color');
+        const sectionGradientStart = document.getElementById('section-gradient-start');
+        const sectionGradientEnd = document.getElementById('section-gradient-end');
+        const gradientAngle = document.getElementById('gradient-angle');
+        const gradientAngleValue = document.getElementById('gradient-angle-value');
+        
+        // Color swatches
+        const primarySwatch = document.getElementById('primary-swatch');
+        const secondarySwatch = document.getElementById('secondary-swatch');
+        const accentSwatch = document.getElementById('accent-swatch');
+        const pageBgSwatch = document.getElementById('page-bg-swatch');
+        const sectionGradientPreview = document.getElementById('section-gradient-preview');
+        
+        // Initialize color swatches
+        updateColorSwatches();
+        
+        // Initialize gradient preview
+        updateGradientPreview();
+        
+        // Initialize service items
+        initializeServices();
+        
+        // Initialize logo scale
+        updateLogoScale();
+        
+        // Initialize accordion behavior
+        initializeAccordions();
+        
+        // Set up event listeners
+        setupEventListeners();
+        
+        // Generate initial preview
+        updatePreview();
+        
+        // Handle accordion toggle
+        function initializeAccordions() {
+            const accordions = document.querySelectorAll('.accordion-header');
+            accordions.forEach(header => {
+                header.addEventListener('click', () => {
+                    const accordion = header.parentElement;
+                    accordion.classList.toggle('active');
+                });
+            });
+        }
+        
+        // Initialize services in the editor
+        function initializeServices() {
+            servicesContainer.innerHTML = '';
+            services.forEach((service, index) => {
+                const html = serviceTemplate
+                    .replace(/{id}/g, service.id)
+                    .replace(/{num}/g, index + 1)
+                    .replace(/{icon}/g, service.icon)
+                    .replace(/{title}/g, service.title)
+                    .replace(/{description}/g, service.description);
+                servicesContainer.innerHTML += html;
+            });
+        }
+        
+        // Set up all event listeners
+        function setupEventListeners() {
+            // Preview button
+            previewBtn.addEventListener('click', updatePreview);
+            
+            // Download buttons
+            downloadBtn.addEventListener('click', downloadHTML);
+            downloadTxtBtn.addEventListener('click', downloadAsText);
+            
+            // Dashboard button
+            dashboardBtn.addEventListener('click', openDashboard);
+            
+            // Add service button
+            addServiceBtn.addEventListener('click', addService);
+            
+            // Delete service buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('delete-btn')) {
+                    const serviceId = e.target.getAttribute('data-id').replace('service-', '');
+                    deleteService(parseInt(serviceId));
+                }
+            });
+            
+            // Logo upload
+            logoUpload.addEventListener('change', handleLogoUpload);
+            
+            // Logo scale slider
+            logoScale.addEventListener('input', function() {
+                updateLogoScale();
+                // Update preview immediately on every change
+                updatePreview();
+            });
+            
+            // Color inputs
+            primaryColor.addEventListener('input', updateColorSwatches);
+            secondaryColor.addEventListener('input', updateColorSwatches);
+            accentColor.addEventListener('input', updateColorSwatches);
+            backgroundColor.addEventListener('input', updateColorSwatches);
+            textColor.addEventListener('input', updateColorSwatches);
+            pageBgColor.addEventListener('input', updateColorSwatches);
+            
+            // Gradient inputs
+            sectionGradientStart.addEventListener('input', updateGradientPreview);
+            sectionGradientEnd.addEventListener('input', updateGradientPreview);
+            gradientAngle.addEventListener('input', updateGradientPreview);
+        }
+        
+        // Update color swatches
+        function updateColorSwatches() {
+            primarySwatch.style.backgroundColor = primaryColor.value;
+            secondarySwatch.style.backgroundColor = secondaryColor.value;
+            accentSwatch.style.backgroundColor = accentColor.value;
+            pageBgSwatch.style.backgroundColor = pageBgColor.value;
+        }
+        
+        // Update gradient preview
+        function updateGradientPreview() {
+            const angle = gradientAngle.value;
+            gradientAngleValue.textContent = `${angle}°`;
+            sectionGradientPreview.style.background = `linear-gradient(${angle}deg, ${sectionGradientStart.value}, ${sectionGradientEnd.value})`;
+        }
+        
+        // Add a new service
+        function addService() {
+            const newService = {
+                id: nextServiceId++,
+                icon: "fas fa-plus-circle",
+                title: "New Service",
+                description: "Description of the new service."
+            };
+            
+            services.push(newService);
+            
+            const html = serviceTemplate
+                .replace(/{id}/g, newService.id)
+                .replace(/{num}/g, services.length)
+                .replace(/{icon}/g, newService.icon)
+                .replace(/{title}/g, newService.title)
+                .replace(/{description}/g, newService.description);
+                
+            servicesContainer.innerHTML += html;
+        }
+        
+        // Delete a service
+        function deleteService(id) {
+            services = services.filter(service => service.id !== id);
+            initializeServices();
+        }
+        
+        // Handle logo upload
+        function handleLogoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                logoPreview.src = event.target.result;
+                logoData = event.target.result;
+                updateLogoScale(); // Apply scale immediately when logo is uploaded
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // Update logo scale based on slider
+        function updateLogoScale() {
+            const scale = logoScale.value;
+            logoScaleValue.textContent = `${scale}%`;
+            logoPreview.style.maxWidth = `${scale}%`;
+            logoPreview.style.maxHeight = `${scale}%`;
+            
+            // Update preview immediately if iframe is loaded
+            if (previewFrame.contentDocument) {
+                const logoImg = previewFrame.contentDocument.querySelector('.circle-image');
+                if (logoImg) {
+                    // Direct assignment is most reliable
+                    logoImg.style.width = `${scale}%`;
+                    logoImg.style.maxWidth = 'none';
+                    logoImg.style.maxHeight = 'none';
+                }
+            }
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Update the preview iframe
+        function updatePreview() {
+            // Get all current values
+            const lawFirmName = document.getElementById('law-firm-name').value;
+            const tagline = document.getElementById('tagline').value;
+            const cardId = document.getElementById('card-id').value;
+            const primaryColorValue = primaryColor.value;
+            const secondaryColorValue = secondaryColor.value;
+            const accentColorValue = accentColor.value;
+            const backgroundColorValue = backgroundColor.value;
+            const textColorValue = textColor.value;
+            const pageBgColorValue = pageBgColor.value;
+            const sectionGradientStartValue = sectionGradientStart.value;
+            const sectionGradientEndValue = sectionGradientEnd.value;
+            const gradientAngleValue = gradientAngle.value;
+            const servicesTitle = document.getElementById('services-title').value;
+            const contactTitle = document.getElementById('contact-title').value;
+            const contactSubtitle = document.getElementById('contact-subtitle').value;
+            const contactName = document.getElementById('contact-name').value;
+            const contactAddress = document.getElementById('contact-address').value;
+            const contactPhone = document.getElementById('contact-phone').value;
+            const contactEmail = document.getElementById('contact-email').value;
+            const contactWebsite = document.getElementById('contact-website').value;
+            const footerText = document.getElementById('footer-text').value;
+            const logoScaleValue = logoScale.value;
+            
+            // Update services data
+            updateServicesData();
+            
+            // Create HTML template
+            const html = generateHTML({
+                lawFirmName,
+                tagline,
+                cardId,
+                primaryColor: primaryColorValue,
+                secondaryColor: secondaryColorValue,
+                accentColor: accentColorValue,
+                backgroundColor: backgroundColorValue,
+                textColor: textColorValue,
+                pageBgColor: pageBgColorValue,
+                sectionGradientStart: sectionGradientStartValue,
+                sectionGradientEnd: sectionGradientEndValue,
+                gradientAngle: gradientAngleValue,
+                servicesTitle,
+                contactTitle,
+                contactSubtitle,
+                contactName,
+                contactAddress,
+                contactPhone,
+                contactEmail,
+                contactWebsite,
+                footerText,
+                logoData,
+                logoScale: logoScaleValue,
+                services
+            });
+            
+            // Update the iframe content
+            const iframe = document.getElementById('preview-frame');
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(html);
+            iframeDoc.close();
+            
+            showNotification('Preview updated!');
+        }
+        
+        // Update services data from form
+        function updateServicesData() {
+            services.forEach(service => {
+                const iconInput = document.getElementById(`service-icon-${service.id}`);
+                const titleInput = document.getElementById(`service-title-${service.id}`);
+                const descInput = document.getElementById(`service-desc-${service.id}`);
+                
+                if (iconInput && titleInput && descInput) {
+                    service.icon = iconInput.value;
+                    service.title = titleInput.value;
+                    service.description = descInput.value;
+                }
+            });
+        }
+        
+        // Download the HTML file
+        function downloadHTML() {
+            // Update services data
+            updateServicesData();
+            
+            // Get all current values
+            const lawFirmName = document.getElementById('law-firm-name').value;
+            const tagline = document.getElementById('tagline').value;
+            const primaryColorValue = primaryColor.value;
+            const secondaryColorValue = secondaryColor.value;
+            const accentColorValue = accentColor.value;
+            const backgroundColorValue = backgroundColor.value;
+            const textColorValue = textColor.value;
+            const pageBgColorValue = pageBgColor.value;
+            const sectionGradientStartValue = sectionGradientStart.value;
+            const sectionGradientEndValue = sectionGradientEnd.value;
+            const gradientAngleValue = gradientAngle.value;
+            const servicesTitle = document.getElementById('services-title').value;
+            const contactTitle = document.getElementById('contact-title').value;
+            const contactSubtitle = document.getElementById('contact-subtitle').value;
+            const contactName = document.getElementById('contact-name').value;
+            const contactAddress = document.getElementById('contact-address').value;
+            const contactPhone = document.getElementById('contact-phone').value;
+            const contactEmail = document.getElementById('contact-email').value;
+            const contactWebsite = document.getElementById('contact-website').value;
+            const footerText = document.getElementById('footer-text').value;
+            const logoScaleValue = logoScale.value;
+            
+            // Generate the HTML
+            const html = generateHTML({
+                lawFirmName,
+                tagline,
+                primaryColor: primaryColorValue,
+                secondaryColor: secondaryColorValue,
+                accentColor: accentColorValue,
+                backgroundColor: backgroundColorValue,
+                textColor: textColorValue,
+                pageBgColor: pageBgColorValue,
+                sectionGradientStart: sectionGradientStartValue,
+                sectionGradientEnd: sectionGradientEndValue,
+                gradientAngle: gradientAngleValue,
+                servicesTitle,
+                contactTitle,
+                contactSubtitle,
+                contactName,
+                contactAddress,
+                contactPhone,
+                contactEmail,
+                contactWebsite,
+                footerText,
+                logoData,
+                logoScale: logoScaleValue,
+                services
+            });
+            
+            // Create a friendly file name based on the law firm name
+            const fileName = lawFirmName.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-').toLowerCase() + '.html';
+            
+            // Create blob and download link
+            const blob = new Blob([html], {type: 'text/html'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            // Show instructions about unblocking the file in Windows
+            showNotification('HTML file downloaded! If Windows shows a security warning, right-click the file, select Properties, and check "Unblock".');
+            // Keep notification visible longer for this important message
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 8000); // Extended to 8 seconds instead of the usual 3
+        }
+
+        // Download as plain text file (avoids Windows security restrictions)
+        function downloadAsText() {
+            // Update services data
+            updateServicesData();
+            
+            // Get all current values (same as in downloadHTML)
+            const lawFirmName = document.getElementById('law-firm-name').value;
+            const tagline = document.getElementById('tagline').value;
+            const primaryColorValue = primaryColor.value;
+            const secondaryColorValue = secondaryColor.value;
+            const accentColorValue = accentColor.value;
+            const backgroundColorValue = backgroundColor.value;
+            const textColorValue = textColor.value;
+            const pageBgColorValue = pageBgColor.value;
+            const sectionGradientStartValue = sectionGradientStart.value;
+            const sectionGradientEndValue = sectionGradientEnd.value;
+            const gradientAngleValue = gradientAngle.value;
+            const servicesTitle = document.getElementById('services-title').value;
+            const contactTitle = document.getElementById('contact-title').value;
+            const contactSubtitle = document.getElementById('contact-subtitle').value;
+            const contactName = document.getElementById('contact-name').value;
+            const contactAddress = document.getElementById('contact-address').value;
+            const contactPhone = document.getElementById('contact-phone').value;
+            const contactEmail = document.getElementById('contact-email').value;
+            const contactWebsite = document.getElementById('contact-website').value;
+            const footerText = document.getElementById('footer-text').value;
+            const logoScaleValue = logoScale.value;
+            
+            // Generate the HTML content
+            const html = generateHTML({
+                lawFirmName,
+                tagline,
+                primaryColor: primaryColorValue,
+                secondaryColor: secondaryColorValue,
+                accentColor: accentColorValue,
+                backgroundColor: backgroundColorValue,
+                textColor: textColorValue,
+                pageBgColor: pageBgColorValue,
+                sectionGradientStart: sectionGradientStartValue,
+                sectionGradientEnd: sectionGradientEndValue,
+                gradientAngle: gradientAngleValue,
+                servicesTitle,
+                contactTitle,
+                contactSubtitle,
+                contactName,
+                contactAddress,
+                contactPhone,
+                contactEmail,
+                contactWebsite,
+                footerText,
+                logoData,
+                logoScale: logoScaleValue,
+                services
+            });
+            
+            // Create a friendly file name
+            const fileName = lawFirmName.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-').toLowerCase() + '.txt';
+            
+            // Create blob as text file and download
+            const blob = new Blob([html], {type: 'text/plain;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('File downloaded as text file. To use it as HTML: 1) Rename to .html after downloading 2) Open with browser');
+            // Keep notification visible longer
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 8000);
+        }
+
+        // Save editor state to localStorage
+        function saveEditorState() {
+            // Gather all current values
+            const state = {
+                lawFirmName: document.getElementById('law-firm-name').value,
+                tagline: document.getElementById('tagline').value,
+                primaryColor: primaryColor.value,
+                secondaryColor: secondaryColor.value,
+                accentColor: accentColor.value,
+                backgroundColor: backgroundColor.value,
+                textColor: textColor.value,
+                pageBgColor: pageBgColor.value,
+                sectionGradientStart: sectionGradientStart.value,
+                sectionGradientEnd: sectionGradientEnd.value,
+                gradientAngle: gradientAngle.value,
+                servicesTitle: document.getElementById('services-title').value,
+                contactTitle: document.getElementById('contact-title').value,
+                contactSubtitle: document.getElementById('contact-subtitle').value,
+                contactName: document.getElementById('contact-name').value,
+                contactAddress: document.getElementById('contact-address').value,
+                contactPhone: document.getElementById('contact-phone').value,
+                contactEmail: document.getElementById('contact-email').value,
+                contactWebsite: document.getElementById('contact-website').value,
+                footerText: document.getElementById('footer-text').value,
+                logoData: logoData,
+                logoScale: logoScale.value,
+                services: services
+            };
+            localStorage.setItem('lawFirmEditorState', JSON.stringify(state));
+            showNotification('Settings saved!');
+        }
+
+        // Load editor state from localStorage
+        function loadEditorState() {
+            const stateStr = localStorage.getItem('lawFirmEditorState');
+            if (!stateStr) return;
+            try {
+                const state = JSON.parse(stateStr);
+                document.getElementById('law-firm-name').value = state.lawFirmName || '';
+                document.getElementById('tagline').value = state.tagline || '';
+                primaryColor.value = state.primaryColor || primaryColor.value;
+                secondaryColor.value = state.secondaryColor || secondaryColor.value;
+                accentColor.value = state.accentColor || accentColor.value;
+                backgroundColor.value = state.backgroundColor || backgroundColor.value;
+                textColor.value = state.textColor || textColor.value;
+                pageBgColor.value = state.pageBgColor || pageBgColor.value;
+                sectionGradientStart.value = state.sectionGradientStart || sectionGradientStart.value;
+                sectionGradientEnd.value = state.sectionGradientEnd || sectionGradientEnd.value;
+                gradientAngle.value = state.gradientAngle || gradientAngle.value;
+                document.getElementById('services-title').value = state.servicesTitle || '';
+                document.getElementById('contact-title').value = state.contactTitle || '';
+                document.getElementById('contact-subtitle').value = state.contactSubtitle || '';
+                document.getElementById('contact-name').value = state.contactName || '';
+                document.getElementById('contact-address').value = state.contactAddress || '';
+                document.getElementById('contact-phone').value = state.contactPhone || '';
+                document.getElementById('contact-email').value = state.contactEmail || '';
+                document.getElementById('contact-website').value = state.contactWebsite || '';
+                document.getElementById('footer-text').value = state.footerText || '';
+                logoData = state.logoData || '';
+                logoScale.value = state.logoScale || logoScale.value;
+                // Restore services
+                if (Array.isArray(state.services)) {
+                    services = state.services;
+                    nextServiceId = services.length + 1;
+                    initializeServices();
+                }
+                // Restore logo preview
+                if (logoData) {
+                    logoPreview.src = logoData;
+                }
+                // Update UI
+                updateColorSwatches();
+                updateGradientPreview();
+                updateLogoScale();
+                updatePreview();
+            } catch (e) {
+                console.error('Failed to load saved state:', e);
+            }
+        }
+
+        // Save button event
+        const saveBtn = document.getElementById('save-btn');
+        saveBtn.addEventListener('click', saveEditorState);
+        // Load state on page load
+        window.addEventListener('DOMContentLoaded', loadEditorState);
+
+        // Add this global function for vCard download from the preview iframe
+        window.downloadVCardFromEditor = function() {
+            // Get all current values from the editor
+            const lawFirmName = document.getElementById('law-firm-name').value;
+            const contactName = document.getElementById('contact-name').value;
+            const contactPhone = document.getElementById('contact-phone').value;
+            const contactEmail = document.getElementById('contact-email').value;
+            const contactAddress = document.getElementById('contact-address').value;
+            const contactWebsite = document.getElementById('contact-website').value;
+            const logoData = window.logoData || '';
+            // vCard fields
+            const nameParts = contactName.split(' ');
+            const lastName = nameParts.length > 1 ? nameParts.pop() : contactName;
+            const firstName = nameParts.join(' ');
+            const organization = lawFirmName;
+            // vCard string
+            let vCardData = "BEGIN:VCARD\n" +
+                "VERSION:3.0\n" +
+                "N:" + lastName + ";" + firstName + ";;;\n" +
+                "FN:" + contactName + "\n" +
+                "ORG:" + organization + "\n" +
+                "TEL:" + contactPhone + "\n" +
+                "ADR:;;" + contactAddress + ";;;\n" +
+                "EMAIL:" + contactEmail + "\n" +
+                "URL:" + contactWebsite + "\n";
+            // Add the photo if available (base64 format)
+            if (logoData && logoData.startsWith('data:image')) {
+                const base64Data = logoData.split(',')[1];
+                vCardData += "PHOTO;ENCODING=b;TYPE=JPEG:" + base64Data + "\n";
+            }
+            vCardData += "END:VCARD";
+            // Download
+            const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', firstName + '-' + lastName + '-Contact.vcf');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            showNotification('Contact card downloaded with logo included.');
+        };
+
+        // Open analytics dashboard
+        function openDashboard() {
+            // Check if we have a card ID
+            const cardId = document.getElementById('card-id').value;
+            
+            // Open dashboard in new tab
+            window.open(`dashboard.html${cardId ? '?cardId=' + encodeURIComponent(cardId) : ''}`, '_blank');
+        }
+    </script>
+</body>
+</html>
