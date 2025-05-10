@@ -1,5 +1,9 @@
 [build]
-builder = "nixpacks"
+builder = "NIXPACKS"
+buildCommand = "npm install"
 
 [deploy]
-startCommand = "npm start"
+numReplicas = 1
+startCommand = "node server.js"
+healthcheckPath = "/"
+healthcheckTimeout = 60
