@@ -17,5 +17,9 @@
   },
   "engines": {
     "node": ">=14.0.0"
-  }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
 }
