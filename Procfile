@@ -1,1 +1,2 @@
-web: node server.minimal.js
+#!/bin/bash
+node server.js
